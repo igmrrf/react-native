@@ -1,74 +1,90 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import {
+    Image,
+    StyleSheet,
+    Platform,
+    Dimensions,
+    SafeAreaView,
+} from "react-native";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { HelloWave } from "@/components/HelloWave";
+import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import React from "react";
+import { IconSymbol } from "@/components/ui/IconSymbol";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+const cloudinary_cloud_name = "ds83j91lr";
+const cloudinary_base_url = "https://res.cloudinary.com";
+const cloudinary_names = [
+    "samples/animals/cat",
+    "giftcards/zqyd0ngnipltgeiamaai",
+    "samples/animals/three-dogs",
+].map(
+    (image) =>
+        `${cloudinary_base_url}/${cloudinary_cloud_name}/image/upload/${image}`
+);
+// <CloudinarySVG style={styles.reactLogo} />}
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+    return (
+        <SafeAreaView style={{ flex: 1 }}>
+            <ParallaxScrollView
+                headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
+                headerImage={
+                    <MaterialIcons
+                        size={310}
+                        color="#FFFFFF"
+                        name="cloud"
+                        style={styles.headerImage}
+                    />
+                }
+            >
+                <ThemedView style={styles.titleContainer}>
+                    <ThemedText type="title">CLOUDINARY</ThemedText>
+                </ThemedView>
+                <ThemedView style={styles.stepContainer}>
+                    {cloudinary_names.map((image) => (
+                        <Image
+                            key={image}
+                            style={styles.image}
+                            source={{ uri: image }}
+                            resizeMode="contain"
+                        />
+                    ))}
+                </ThemedView>
+            </ParallaxScrollView>
+        </SafeAreaView>
+    );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
+    titleContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 8,
+    },
+
+    stepContainer: {
+        flex: 1,
+        gap: 8,
+        marginBottom: 8,
+    },
+    headerImage: {
+        color: "#FFFFFF",
+        bottom: -90,
+        left: -35,
+        position: "absolute",
+    },
+    reactLogo: {
+        height: 178,
+        width: 290,
+        top: 0,
+        left: -25,
+        position: "absolute",
+    },
+    image: {
+        // width: 300,
+        height: 350,
+    },
 });
